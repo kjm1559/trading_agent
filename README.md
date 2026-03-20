@@ -166,7 +166,56 @@ DB_PATH=./data/trading.db
 # Logging
 LOG_LEVEL=INFO
 LOG_FILE=./logs/trading.log
+
+# Telegram Bot Configuration
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+TELEGRAM_AUTHORIZED_USERS=user_id1,user_id2  # Comma-separated list of authorized user IDs
 ```
+
+---
+
+## 💬 Telegram Bot Features
+
+### Setup
+
+1. **Create a Telegram Bot**:
+   - Message "@BotFather" on Telegram
+   - Send `/newbot` command
+   - Follow instructions to create your bot
+   - Copy the bot token
+
+2. **Find Your User ID**:
+   - Message "@userinfobot" on Telegram
+   - Your user ID will be displayed
+
+3. **Configure Environment Variables**:
+   ```bash
+   TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
+   TELEGRAM_AUTHORIZED_USERS=123456789,987654321
+   ```
+
+### Available Commands
+
+| Command | Description |
+|---------|-------------|
+| `/start` | Show welcome message and available commands |
+| `/status` | Check bot status (running/paused) |
+| `/check` | Trigger agent analysis cycle manually |
+| `/help` | Show help message |
+
+### Notifications
+
+You will receive Telegram notifications when:
+- Agent actions start
+- Agent actions complete (success/failure)
+- Trading operations execute
+- Errors occur
+
+### Security
+
+- Only authorized users (listed in `TELEGRAM_AUTHORIZED_USERS`) can send commands
+- Bot token should never be committed to version control
+- All user commands are authenticated before execution
 
 ---
 

@@ -67,9 +67,9 @@ class InformationCollector:
         return results
 
     def collect_market_trend(
-        self, stock_code: str, count: int = 10, timeframe: str = "m1"
+        self, stock_code: str, count: int = 10
     ) -> Dict:
-        return self.kis_api.get_market_trend(stock_code, count, timeframe)
+        return self.kis_api.get_market_trend(stock_code, count)
 
     def collect_all_data(
         self, stock_codes: Optional[List[str]] = None
@@ -112,8 +112,12 @@ class InformationCollector:
         stock_codes: List[str],
         interval_seconds: int = 60,
     ):
+        async def collect_once():
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(None, lambda: self.collect_market_data(stock_codes))
+
         while True:
-            asyncio.create_task(self.collect_market_data(stock_codes))
+            await collect_once()
             await asyncio.sleep(interval_seconds)
 
     def analyze_market_sentiment(self, stock_code: str) -> str:

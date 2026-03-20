@@ -84,6 +84,17 @@ class Config:
     def log_file(self) -> str:
         return Config._get_str("LOG_FILE", "./logs/trading.log") or "./logs/trading.log"
 
+    @property
+    def telegram_bot_token(self) -> Optional[str]:
+        return Config._get_str("TELEGRAM_BOT_TOKEN")
+
+    @property
+    def telegram_authorized_users(self) -> list[str]:
+        users_str = Config._get_str("TELEGRAM_AUTHORIZED_USERS", "")
+        if not users_str:
+            return []
+        return [user_id.strip() for user_id in users_str.split(",") if user_id.strip()]
+
 
 def validate_config():
     config = Config()
